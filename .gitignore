@@ -25,3 +25,13 @@ proguard/
 
 # Log Files
 *.log
+
+# Windows cache
+Thumbs.db
+
+# Mac cache
+.DS_Store
+
+# Android Studio files
+/.idea/
+*.iml
