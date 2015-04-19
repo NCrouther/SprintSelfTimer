@@ -13,14 +13,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/secondary_text_light"
             android:id="@+id/resultItemTitle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14sp"
-            android:textColor="@android:color/darker_gray"
+            android:textColor="@android:color/tertiary_text_light"
             android:id="@+id/resultItemExplanation" />
     </LinearLayout>
 
@@ -33,6 +33,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="24sp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/primary_text_light"
         android:id="@+id/resultItemValue" />
 </LinearLayout>
