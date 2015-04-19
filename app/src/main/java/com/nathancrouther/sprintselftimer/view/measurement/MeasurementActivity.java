@@ -218,12 +218,14 @@ public final class MeasurementActivity extends ActionBarActivity {
         long totalTimeInMilliseconds = releasedTimeInMilliseconds - bangTimeInMilliseconds;
         Long reactionTimeInMilliseconds;
         if (state == State.RUNNING) {
+            vibrator.vibrate(100);
             reactionTimeInMilliseconds =
                     firstMovedRapidlyTimeInMilliseconds - bangTimeInMilliseconds;
             controller.onMeasurementComplete(
                     this, totalTimeInMilliseconds, reactionTimeInMilliseconds);
             setStageDone();
         } else if (state == State.REACTING) {
+            vibrator.vibrate(100);
             controller.onMeasurementComplete(
                     this, totalTimeInMilliseconds, null);
             setStageDone();
