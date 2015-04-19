@@ -55,7 +55,7 @@ public final class MeasurementActivity extends ActionBarActivity {
     private static final int SETTING_BANG_FIXED_DELAY_MILLISECONDS = 1000;
     // after runner is set, wait a random amount <= this to start
     private static final int SETTING_BANG_RANDOM_DELAY_MILLISECONDS = 1000;
-    private final Controller controller = new Controller();
+    private final Controller controller = Controller.INSTANCE;
     private final Handler handler = new Handler();
     @InjectView(R.id.measurement_stepLabel)
     TextView tvStepLabel;

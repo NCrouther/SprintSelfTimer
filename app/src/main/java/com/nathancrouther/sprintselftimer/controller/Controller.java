@@ -11,6 +11,11 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class Controller {
+    public static final Controller INSTANCE = new Controller();
+
+    private Controller() {
+    }
+
     public void onMeasurementComplete(
             Context context,
             long totalTimeInMilliseconds,
