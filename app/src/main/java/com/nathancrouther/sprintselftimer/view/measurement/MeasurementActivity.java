@@ -216,10 +216,9 @@ public final class MeasurementActivity extends ActionBarActivity {
 
         long releasedTimeInMilliseconds = System.currentTimeMillis();
         long totalTimeInMilliseconds = releasedTimeInMilliseconds - bangTimeInMilliseconds;
-        Long reactionTimeInMilliseconds;
         if (state == State.RUNNING) {
             vibrator.vibrate(100);
-            reactionTimeInMilliseconds =
+            long reactionTimeInMilliseconds =
                     firstMovedRapidlyTimeInMilliseconds - bangTimeInMilliseconds;
             controller.onMeasurementComplete(
                     this, totalTimeInMilliseconds, reactionTimeInMilliseconds);
