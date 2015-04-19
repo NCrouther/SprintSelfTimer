@@ -18,13 +18,19 @@ import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import uk.co.ribot.easyadapter.EasyAdapter;
 
 public final class ResultsActivity extends ActionBarActivity {
     private static final String TAG_VIEW_MODEL = "ViewModel";
 
-    @InjectView(R.id.results_timestamp) TextView tvTimestamp;
-    @InjectView(R.id.results_list) ListView lvList;
-    @InjectView(R.id.results_unknownExplanation) TextView tvUnknownExplanation;
+    @InjectView(R.id.results_timestamp)
+    TextView tvTimestamp;
+
+    @InjectView(R.id.results_list)
+    ListView lvList;
+
+    @InjectView(R.id.results_unknownExplanation)
+    TextView tvUnknownExplanation;
 
     public static Intent createIntent(Context context, ResultsViewModel vm) {
         Intent intent = new Intent(context, ResultsActivity.class);
@@ -40,9 +46,9 @@ public final class ResultsActivity extends ActionBarActivity {
 
         ResultsViewModel vm = getIntent().getParcelableExtra(TAG_VIEW_MODEL);
         tvTimestamp.setText(vm.getTimestamp());
-        ResultsListAdapter adapter = new ResultsListAdapter(
+        lvList.setAdapter(new EasyAdapter<>(
                 this,
-                R.layout.item_results_list,
+                ResultsListItemViewHolder.class,
                 Arrays.asList(
                         new ResultsListItem(
                                 R.string.label_totalTime,
@@ -56,8 +62,7 @@ public final class ResultsActivity extends ActionBarActivity {
                                 R.string.label_runningTime,
                                 R.string.explanation_runningTime,
                                 vm.getRunningTime())
-                ));
-        lvList.setAdapter(adapter);
+                )));
         tvUnknownExplanation.setVisibility(
                 vm.isDisplayUnknownExplanation()
                         ? View.VISIBLE
