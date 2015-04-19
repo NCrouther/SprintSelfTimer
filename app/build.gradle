@@ -30,4 +30,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'uk.co.ribot:easyadapter:1.4.0@aar'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
 }

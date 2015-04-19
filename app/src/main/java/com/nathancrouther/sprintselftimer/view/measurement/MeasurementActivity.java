@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -101,6 +103,23 @@ public final class MeasurementActivity extends ActionBarActivity {
         sensorManager.unregisterListener(accelerometerListener);
 
         super.onStop();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_measurement, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_viewAllResults:
+                controller.onViewAllResults(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

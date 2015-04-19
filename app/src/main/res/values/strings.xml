@@ -16,4 +16,5 @@
     <string name="step_getSet">Get set…</string>
     <string name="step_stayStill">Stay still…</string>
     <string name="step_go">GO!</string>
+    <string name="menu_viewAllResults">View All Results</string>
 </resources>
