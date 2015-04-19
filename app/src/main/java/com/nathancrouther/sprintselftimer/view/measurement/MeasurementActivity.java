@@ -161,9 +161,7 @@ public final class MeasurementActivity extends ActionBarActivity {
     }
 
     private void playOnYourMarks() {
-        vibrator.vibrate(new long[]{0, 100, 50, 100, 50, 100}, -1);
-
-        handler.postDelayed(new Runnable() {
+        animateStage(SETTING_ON_YOUR_MARKS_DELAY_MILLISECONDS, new Runnable() {
             @Override
             public void run() {
                 if (state == State.PRESSED) {
@@ -171,19 +169,41 @@ public final class MeasurementActivity extends ActionBarActivity {
                     playGetSet();
                 }
             }
-        }, SETTING_ON_YOUR_MARKS_DELAY_MILLISECONDS);
+        });
+
+        vibrator.vibrate(new long[]{0, 100, 50, 100, 50, 100}, -1);
     }
 
     private void playGetSet() {
-        vibrator.vibrate(new long[]{0, 100, 50, 100}, -1);
-
-        handler.postDelayed(new Runnable() {
+        animateStage(SETTING_GET_SET_DELAY_MILLISECONDS, new Runnable() {
             @Override
             public void run() {
                 state = State.SET;
+                setStageStayStill();
                 onRunnerSet();
             }
-        }, SETTING_GET_SET_DELAY_MILLISECONDS);
+        });
+
+        vibrator.vibrate(new long[]{0, 100, 50, 100}, -1);
+    }
+
+    private void animateStage(int duration, Runnable nextStageTransition) {
+        final int PROGRESS_STEPS = 10;
+
+        for (int i = 1; i <= PROGRESS_STEPS; ++i) {
+            final int elapsedTicks = i;
+
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (state == State.PRESSED) {
+                        setStageProgress(elapsedTicks * 100 / PROGRESS_STEPS);
+                    }
+                }
+            }, elapsedTicks * duration / (PROGRESS_STEPS + 1));
+        }
+
+        handler.postDelayed(nextStageTransition, duration);
     }
 
     private void onRunnerSet() {
@@ -251,6 +271,10 @@ public final class MeasurementActivity extends ActionBarActivity {
         }
     }
 
+    private void setStageProgress(int percent) {
+        pbProgressBar.setProgress(percent);
+    }
+
     private void setStageInitial() {
         tvStepLabel.setText(R.string.step_start);
         pbProgressBar.setVisibility(View.GONE);
@@ -259,11 +283,18 @@ public final class MeasurementActivity extends ActionBarActivity {
     private void setStageOnYourMarks() {
         tvStepLabel.setText(R.string.step_onYourMark);
         pbProgressBar.setVisibility(View.VISIBLE);
+        setStageProgress(0);
     }
 
     private void setStageGetSet() {
         tvStepLabel.setText(R.string.step_getSet);
         pbProgressBar.setVisibility(View.VISIBLE);
+        setStageProgress(0);
+    }
+
+    private void setStageStayStill() {
+        tvStepLabel.setText(R.string.step_stayStill);
+        pbProgressBar.setVisibility(View.GONE);
     }
 
     private void setStageGo() {

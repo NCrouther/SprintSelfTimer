@@ -15,5 +15,6 @@
     <string name="step_start">Press and hold the screen to start</string>
     <string name="step_onYourMark">On your mark…</string>
     <string name="step_getSet">Get set…</string>
+    <string name="step_stayStill">Stay still…</string>
     <string name="step_go">GO!</string>
 </resources>
