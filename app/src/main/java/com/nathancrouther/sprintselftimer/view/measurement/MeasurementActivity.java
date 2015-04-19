@@ -1,9 +1,11 @@
 package com.nathancrouther.sprintselftimer.view.measurement;
 
+import android.annotation.TargetApi;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
@@ -123,9 +125,29 @@ public final class MeasurementActivity extends ActionBarActivity {
     }
 
     private void onScreenPressed() {
+        hideNavigation();
+
         state = State.PRESSED;
         setStageOnYourMarks();
         playOnYourMarks();
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void hideNavigation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            View v = getWindow().getDecorView();
+            int flags = v.getSystemUiVisibility();
+            v.setSystemUiVisibility(flags | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private void showNavigation() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            View v = getWindow().getDecorView();
+            int flags = v.getSystemUiVisibility();
+            v.setSystemUiVisibility(flags & ~View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
+        }
     }
 
     private void playOnYourMarks() {
@@ -176,6 +198,8 @@ public final class MeasurementActivity extends ActionBarActivity {
     }
 
     private void onScreenReleased() {
+        showNavigation();
+
         long releasedTimeInMilliseconds = System.currentTimeMillis();
         long totalTimeInMilliseconds = releasedTimeInMilliseconds - bangTimeInMilliseconds;
         Long reactionTimeInMilliseconds;
