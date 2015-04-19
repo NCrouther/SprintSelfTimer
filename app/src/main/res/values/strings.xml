@@ -12,7 +12,7 @@
     <string name="result_unknownExplanation">* Unable to Calculate Reaction Time: No motion was detected.</string>
     <string name="toast_FalseStart">False Start</string>
     <string name="toast_SprintCancelled">Sprint Cancelled</string>
-    <string name="step_start">Press and hold the screen to start</string>
+    <string name="step_start">Touch and hold the screen to start.\n\nYou will receive:\n3 vibrations to get on your mark,\n2 vibrations to get set, and\n1 vibration to start running.\n\nLift your finger from the screen as you cross the finish line to stop the timer.</string>
     <string name="step_onYourMark">On your mark…</string>
     <string name="step_getSet">Get set…</string>
     <string name="step_stayStill">Stay still…</string>
