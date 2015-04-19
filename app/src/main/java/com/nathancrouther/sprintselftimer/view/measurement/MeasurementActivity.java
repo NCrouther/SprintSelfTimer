@@ -75,8 +75,6 @@ public final class MeasurementActivity extends ActionBarActivity {
         setContentView(R.layout.activity_measurement);
         ButterKnife.inject(this);
 
-        setStageInitial();
-
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
     }
@@ -89,6 +87,15 @@ public final class MeasurementActivity extends ActionBarActivity {
                 accelerometerListener,
                 sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_FASTEST);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (state == State.IDLE) {
+            setStageInitial();
+        }
     }
 
     @Override
@@ -211,20 +218,24 @@ public final class MeasurementActivity extends ActionBarActivity {
                     firstMovedRapidlyTimeInMilliseconds - bangTimeInMilliseconds;
             controller.onMeasurementComplete(
                     this, totalTimeInMilliseconds, reactionTimeInMilliseconds);
+            setStageDone();
         } else if (state == State.REACTING) {
             controller.onMeasurementComplete(
                     this, totalTimeInMilliseconds, null);
-        } else if (state != State.IDLE) {
-            handler.removeCallbacksAndMessages(null);
-            Toast.makeText(
-                    this,
-                    getString(R.string.toast_SprintCancelled),
-                    Toast.LENGTH_LONG).show();
-            vibrator.vibrate(500);
+            setStageDone();
+        } else {
+            if (state != State.IDLE) {
+                handler.removeCallbacksAndMessages(null);
+                Toast.makeText(
+                        this,
+                        getString(R.string.toast_SprintCancelled),
+                        Toast.LENGTH_LONG).show();
+                vibrator.vibrate(500);
+            }
+            setStageInitial();
         }
 
         state = State.IDLE;
-        setStageInitial();
     }
 
     private void onScreenMovedRapidly() {
@@ -260,6 +271,11 @@ public final class MeasurementActivity extends ActionBarActivity {
         pbProgressBar.setVisibility(View.GONE);
     }
 
+    private void setStageDone() {
+        tvStepLabel.setText("");
+        pbProgressBar.setVisibility(View.GONE);
+    }
+
     private static enum State {
         IDLE,
         PRESSED,
@@ -267,10 +283,4 @@ public final class MeasurementActivity extends ActionBarActivity {
         REACTING,
         RUNNING
     }
-
-    //TODO: implement this
-    //private void setStageDone() {
-    //    tvStepLabel.setText("");
-    //    pbProgressBar.setVisibility(View.GONE);
-    //}
 }
