@@ -2,11 +2,11 @@ package com.nathancrouther.sprintselftimer.controller;
 
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
 import com.nathancrouther.sprintselftimer.R;
 import com.nathancrouther.sprintselftimer.model.Database;
 import com.nathancrouther.sprintselftimer.model.Results;
+import com.nathancrouther.sprintselftimer.view.logbook.LogbookActivity;
 import com.nathancrouther.sprintselftimer.view.results.ResultsActivity;
 
 import java.util.Date;
@@ -39,12 +39,12 @@ public class Controller {
     }
 
     public void onViewAllResults(Context context) {
-        Toast.makeText(
-                context,
-                String.format(
-                        "%d results in database",
-                        getDatabase(context).getAllResults().size()),
-                Toast.LENGTH_LONG).show();
+        LogbookViewModel logbookViewModel = new LogbookViewModel(
+                getDatabase(context).getAllResults(),
+                context.getString(R.string.logbook_valueFormat),
+                context.getString(R.string.logbook_unknownValue));
+        Intent intent = LogbookActivity.createIntent(context, logbookViewModel);
+        context.startActivity(intent);
     }
 
     private void showResultsActivity(Context context, Results results) {

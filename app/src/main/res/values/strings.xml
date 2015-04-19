@@ -17,4 +17,6 @@
     <string name="step_stayStill">Stay still…</string>
     <string name="step_go">GO!</string>
     <string name="menu_viewAllResults">View All Results</string>
+    <string name="logbook_valueFormat">%.3fs</string>
+    <string name="logbook_unknownValue">\?</string>
 </resources>
