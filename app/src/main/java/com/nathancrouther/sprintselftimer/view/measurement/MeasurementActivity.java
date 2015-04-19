@@ -59,7 +59,10 @@ public final class MeasurementActivity extends ActionBarActivity {
     private static final int SETTING_BANG_RANDOM_DELAY_MILLISECONDS = 1000;
     private final Controller controller = new Controller();
     private final Handler handler = new Handler();
-
+    @InjectView(R.id.measurement_stepLabel)
+    TextView tvStepLabel;
+    @InjectView(R.id.measurement_progressBar)
+    ProgressBar pbProgressBar;
     private SensorManager sensorManager;
     private Vibrator vibrator;
     private State state = State.IDLE;
@@ -237,17 +240,6 @@ public final class MeasurementActivity extends ActionBarActivity {
         }
     }
 
-    private static enum State {
-        IDLE,
-        PRESSED,
-        SET,
-        REACTING,
-        RUNNING
-    }
-
-    @InjectView(R.id.measurement_stepLabel) TextView tvStepLabel;
-    @InjectView(R.id.measurement_progressBar) ProgressBar pbProgressBar;
-
     private void setStageInitial() {
         tvStepLabel.setText(R.string.step_start);
         pbProgressBar.setVisibility(View.GONE);
@@ -266,6 +258,14 @@ public final class MeasurementActivity extends ActionBarActivity {
     private void setStageGo() {
         tvStepLabel.setText(R.string.step_go);
         pbProgressBar.setVisibility(View.GONE);
+    }
+
+    private static enum State {
+        IDLE,
+        PRESSED,
+        SET,
+        REACTING,
+        RUNNING
     }
 
     //TODO: implement this
