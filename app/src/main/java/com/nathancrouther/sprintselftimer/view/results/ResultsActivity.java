@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.nathancrouther.sprintselftimer.R;
 import com.nathancrouther.sprintselftimer.controller.ResultsViewModel;
 
+import org.parceler.Parcels;
+
 import java.util.Arrays;
 
 import butterknife.ButterKnife;
@@ -33,7 +35,7 @@ public final class ResultsActivity extends ActionBarActivity {
 
     public static Intent createIntent(Context context, ResultsViewModel vm) {
         Intent intent = new Intent(context, ResultsActivity.class);
-        intent.putExtra(TAG_VIEW_MODEL, vm);
+        intent.putExtra(TAG_VIEW_MODEL, Parcels.wrap(vm));
         return intent;
     }
 
@@ -43,7 +45,7 @@ public final class ResultsActivity extends ActionBarActivity {
         setContentView(R.layout.activity_results);
         ButterKnife.inject(this);
 
-        ResultsViewModel vm = getIntent().getParcelableExtra(TAG_VIEW_MODEL);
+        ResultsViewModel vm = Parcels.unwrap(getIntent().getParcelableExtra(TAG_VIEW_MODEL));
         tvTimestamp.setText(vm.getTimestamp());
         lvList.setAdapter(new EasyAdapter<>(
                 this,

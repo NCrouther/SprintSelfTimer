@@ -1,28 +1,26 @@
 package com.nathancrouther.sprintselftimer.controller;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.nathancrouther.sprintselftimer.model.Results;
+
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 
 import java.text.DateFormat;
 
-public class LogbookItemViewModel implements Parcelable {
-    public static final Parcelable.Creator CREATOR =
-            new Parcelable.Creator() {
-                public LogbookItemViewModel createFromParcel(Parcel in) {
-                    return new LogbookItemViewModel(in);
-                }
-
-                public LogbookItemViewModel[] newArray(int size) {
-                    return new LogbookItemViewModel[size];
-                }
-            };
-
+@Parcel(Parcel.Serialization.BEAN)
+public class LogbookItemViewModel {
     private final String timestamp;
     private final String totalTime;
     private final String reactionTime;
     private final String runningTime;
+
+    @ParcelConstructor
+    LogbookItemViewModel(String timestamp, String totalTime, String reactionTime, String runningTime) {
+        this.timestamp = timestamp;
+        this.totalTime = totalTime;
+        this.reactionTime = reactionTime;
+        this.runningTime = runningTime;
+    }
 
     LogbookItemViewModel(Results results, String valueFormat, String unknownValueText) {
         DateFormat format = DateFormat.getDateTimeInstance();
@@ -40,30 +38,9 @@ public class LogbookItemViewModel implements Parcelable {
         }
     }
 
-    private LogbookItemViewModel(Parcel in) {
-        timestamp = in.readString();
-        totalTime = in.readString();
-        reactionTime = in.readString();
-        runningTime = in.readString();
-    }
-
     private static String formatResult(String format, long milliseconds) {
         return String.format(format, milliseconds / 1000.0);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(timestamp);
-        dest.writeString(totalTime);
-        dest.writeString(reactionTime);
-        dest.writeString(runningTime);
-    }
-
     public String getTimestamp() {
         return timestamp;
     }

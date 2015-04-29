@@ -1,25 +1,21 @@
 package com.nathancrouther.sprintselftimer.controller;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.nathancrouther.sprintselftimer.model.Results;
+
+import org.parceler.Parcel;
+import org.parceler.ParcelConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogbookViewModel implements Parcelable {
-    public static final Parcelable.Creator CREATOR =
-            new Parcelable.Creator() {
-                public LogbookViewModel createFromParcel(Parcel in) {
-                    return new LogbookViewModel(in);
-                }
-
-                public LogbookViewModel[] newArray(int size) {
-                    return new LogbookViewModel[size];
-                }
-            };
+@Parcel(Parcel.Serialization.BEAN)
+public class LogbookViewModel {
     private final List<LogbookItemViewModel> items;
+
+    @ParcelConstructor
+    LogbookViewModel(List<LogbookItemViewModel> items) {
+        this.items = items;
+    }
 
     public LogbookViewModel(
             List<Results> resultsList,
@@ -29,21 +25,6 @@ public class LogbookViewModel implements Parcelable {
         for (Results results : resultsList) {
             items.add(new LogbookItemViewModel(results, valueFormat, unknownValueText));
         }
-    }
-
-    private LogbookViewModel(Parcel in) {
-        items = new ArrayList<LogbookItemViewModel>();
-        in.readTypedList(items, LogbookItemViewModel.CREATOR);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeTypedList(items);
     }
 
     public List<LogbookItemViewModel> getItems() {

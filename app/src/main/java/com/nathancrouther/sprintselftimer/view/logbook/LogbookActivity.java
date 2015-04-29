@@ -11,6 +11,8 @@ import android.widget.ListView;
 import com.nathancrouther.sprintselftimer.R;
 import com.nathancrouther.sprintselftimer.controller.LogbookViewModel;
 
+import org.parceler.Parcels;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import uk.co.ribot.easyadapter.EasyAdapter;
@@ -23,7 +25,7 @@ public final class LogbookActivity extends ActionBarActivity {
 
     public static Intent createIntent(Context context, LogbookViewModel vm) {
         Intent intent = new Intent(context, LogbookActivity.class);
-        intent.putExtra(TAG_VIEW_MODEL, vm);
+        intent.putExtra(TAG_VIEW_MODEL, Parcels.wrap(vm));
         return intent;
     }
 
@@ -33,7 +35,7 @@ public final class LogbookActivity extends ActionBarActivity {
         setContentView(R.layout.activity_logbook);
         ButterKnife.inject(this);
 
-        LogbookViewModel vm = getIntent().getParcelableExtra(TAG_VIEW_MODEL);
+        LogbookViewModel vm = Parcels.unwrap(getIntent().getParcelableExtra(TAG_VIEW_MODEL));
         lvList.setAdapter(new EasyAdapter<>(
                 this,
                 LogbookItemViewHolder.class,

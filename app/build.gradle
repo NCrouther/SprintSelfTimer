@@ -31,4 +31,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'uk.co.ribot:easyadapter:1.4.0@aar'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'org.parceler:parceler-api:0.2.16'
+    provided 'org.parceler:parceler:0.2.16'
+
 }
