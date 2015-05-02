@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class Database {
@@ -26,6 +27,10 @@ public class Database {
     }
 
     public List<Results> getAllResults() {
-        return resultsDao.queryForAll();
+        try {
+            return resultsDao.queryBuilder().orderBy("timestamp", false).query();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
